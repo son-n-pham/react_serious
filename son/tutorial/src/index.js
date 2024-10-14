@@ -1,35 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-const book = {
-  title:
-    'Amazon FBA Mastery: Your 5-Days Beginner To Expert Guide In Selling Highly Profitable Private Label Products On Amazon (Business And Money Series)',
-  img: './img/book1.jpg',
-  author: 'Michael Ezeanaka',
-};
+import './index.css';
+import { books } from './books';
+import Book from './Book';
+import { EventExample } from './EventExample';
 
 const BookList = () => {
+  const someValue = 'shakeAndBake';
+  const getBook = (id) => {
+    const searchedBook = books.find((book) => book.id === id);
+    return searchedBook ? searchedBook : null;
+  };
+  const displayValue = () => console.log(someValue);
   return (
     <>
-      <Book title={book.title} author={book.author} img={book.img} />
-      <Book title={book.title} author={book.author} img={book.img} />
-      <Book title={book.title} author={book.author} img={book.img} />
-      <Book title={book.title} author={book.author} img={book.img} />
+      <h1>Amazon Best Sellers</h1>
+      <section className="booklist">
+        <EventExample />
+        {books.map((book, index) => {
+          // const { author, title, img, id } = book;
+          // return <Book key={id} title={title} author={author} image={img} />;
+          return (
+            <Book
+              key={book.id}
+              number={index}
+              {...book}
+              getBook={getBook}
+              displayValue={displayValue}
+            />
+          );
+        })}{' '}
+      </section>
     </>
   );
 };
 
-const Book = ({ tittle, author, img }) => {
-  return (
-    <article>
-      <Image />
-      <Title />
-      <Author />
-    </article>
-  );
-};
-
-const Image = () => {};
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Greeting />);
+root.render(<BookList />);
